@@ -1,0 +1,15 @@
+{
+  "name": "weft-docs",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "assets": "../.build-venv/bin/python ../scripts/build-docs-assets.py && node ../scripts/copy-play.mjs",
+    "dev": "npm run assets && vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}

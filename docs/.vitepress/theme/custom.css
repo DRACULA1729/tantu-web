@@ -1,0 +1,46 @@
+:root {
+  --vp-c-brand-1: #5a72d6;
+  --vp-c-brand-2: #6f86e6;
+  --vp-c-brand-3: #7c9cff;
+}
+
+.dark {
+  --vp-c-brand-1: #8fa4ff;
+  --vp-c-brand-2: #7c9cff;
+  --vp-c-brand-3: #6f86e6;
+}
+
+/* "Try it ▶" button hangs on the top-right of each runnable Weft code block. */
+.weft-block {
+  position: relative;
+}
+
+.weft-block .try-it {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 3;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: #fff;
+  background: var(--vp-c-brand-1);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.weft-block:hover .try-it {
+  opacity: 1;
+}
+
+.weft-block .try-it:hover {
+  background: var(--vp-c-brand-2);
+}
+
+/* keep the button from colliding with VitePress's copy button */
+.weft-block div[class*="language-"] > button.copy {
+  right: 88px;
+}
