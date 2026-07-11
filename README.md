@@ -6,7 +6,7 @@ bytecode); the **real** interpreter runs in the browser via [Pyodide](https://py
 (CPython-in-WASM), no backend. The docs are a VitePress site whose runnable snippets link straight
 into the playground.
 
-This is a standalone project. The language repo (`../Combined Interpreter`) is treated as
+This is a standalone project. The language repo (`../Tantu`) is treated as
 **read-only**: all assets (wheel, examples, grammar, reference tables) are generated from it by
 scripts, never modified in place.
 
@@ -77,10 +77,10 @@ npm run dev        # runs the asset build, then starts Vite on :5173
 
 `npm run dev` / `npm run build` both run `scripts/build-tantu-assets.mjs` first, which:
 
-1. copies `../Combined Interpreter/{pyproject.toml,tantu/}` into a temp dir and builds the wheel
+1. copies `../Tantu/{pyproject.toml,tantu/}` into a temp dir and builds the wheel
    **there** (so the language repo is never written to — no `build/` or `*.egg-info`),
 2. copies the wheel + a `tantu-wheel.json` manifest into `playground/public/`,
-3. copies `../Combined Interpreter/examples/*.tn` into `playground/public/examples/` and writes
+3. copies `../Tantu/examples/*.tn` into `playground/public/examples/` and writes
    an `index.json` the examples gallery fetches.
 
 Re-run it (`npm run assets`) whenever the language changes to resync the wheel + examples — it is
@@ -88,7 +88,7 @@ the single seam between the two repos.
 
 **Vendored assets:** the wheel, `tantu-wheel.json`, and `playground/public/examples/` are
 *committed*, not just generated, so the repo builds standalone when the language repo isn't
-checked out next to it (CI, Netlify, a bare clone). Without `../Combined Interpreter`,
+checked out next to it (CI, Netlify, a bare clone). Without `../Tantu`,
 `build-tantu-assets.mjs` uses the vendored copies as-is and `build-docs-assets.py` imports the
 language modules straight from the vendored wheel (a pure-Python wheel is zip-importable). After
 resyncing with `npm run assets`, commit the changed assets.
