@@ -1,6 +1,6 @@
 # Language tour
 
-A guided walk through Tantu. Every block runs — hit **Try it ▶** and change things.
+A guided walk through Tantu. Every block runs — hit **Try it ** and change things.
 
 ## Values and bindings
 

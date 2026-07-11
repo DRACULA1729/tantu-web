@@ -15,7 +15,7 @@ function base64url(s: string): string {
   return Buffer.from(s, "utf-8").toString("base64url");
 }
 
-// Append a "Try it ▶" button to every ```tantu fence, linking to the playground with the snippet
+// Append a "Try it " button to every ```tantu fence, linking to the playground with the snippet
 // preloaded via the #code= share format (identical to playground/src/playground/share.ts).
 function tryItPlugin(md: MarkdownIt): void {
   const defaultFence = md.renderer.rules.fence!;
@@ -30,7 +30,7 @@ function tryItPlugin(md: MarkdownIt): void {
     return (
       `<div class="tantu-block">` +
       rendered +
-      `<a class="try-it" href="${href}" target="_blank" rel="noopener">Try it ▶</a>` +
+      `<a class="try-it" href="${href}" target="_blank" rel="noopener">Try it </a>` +
       `</div>`
     );
   };

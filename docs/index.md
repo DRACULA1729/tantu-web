@@ -46,5 +46,5 @@ fn main() -> Unit:
     print(area(Rect(3.0, 4.0)))
 ```
 
-Hover any code block and hit **Try it ▶** to run it in the [playground](/play/){target="_blank" rel="noopener"} —
+Hover any code block and hit **Try it** to run it in the [playground](/play/){target="_blank" rel="noopener"} —
 the real interpreter, running in your browser. No install required.

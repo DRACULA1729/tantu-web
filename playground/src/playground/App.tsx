@@ -140,7 +140,7 @@ export default function App() {
             Share
           </button>
           <button className="btn run" onClick={run} disabled={busy || running}>
-            {running ? "Running…" : busy ? "Booting…" : "▶ Run"}
+            {running ? "Running…" : busy ? "Booting…" : " Run"}
           </button>
         </div>
       </header>

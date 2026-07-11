@@ -1,7 +1,7 @@
 # Quick start
 
 The fastest way to try Tantu is the **[playground](/play/){target="_blank" rel="noopener"}** — it runs the real
-interpreter in your browser, with no install. Every code block in these docs has a **Try it ▶**
+interpreter in your browser, with no install. Every code block in these docs has a **Try it **
 button (hover to reveal it) that opens the snippet there.
 
 ## Hello, world
