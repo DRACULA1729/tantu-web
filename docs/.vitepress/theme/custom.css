@@ -10,7 +10,7 @@
   --vp-c-brand-3: #6f86e6;
 }
 
-/* "Try it ▶" button hangs on the top-right of each runnable Tantu code block. */
+/* "Try it " button hangs on the top-right of each runnable Tantu code block. */
 .tn-block {
   position: relative;
 }
