@@ -1,10 +1,10 @@
 {
-  "name": "weft-playground",
+  "name": "tantu-playground",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "assets": "node ../scripts/build-weft-assets.mjs",
+    "assets": "node ../scripts/build-tantu-assets.mjs",
     "dev": "npm run assets && vite",
     "build": "npm run assets && tsc -b && vite build",
     "preview": "vite preview"

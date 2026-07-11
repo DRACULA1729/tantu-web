@@ -1,6 +1,6 @@
 # Error-code reference
 
-Every diagnostic Weft reports carries a stable code. The prefix tells you which stage produced it:
+Every diagnostic Tantu reports carries a stable code. The prefix tells you which stage produced it:
 
 | Prefix | Stage | When |
 |--------|-------|------|
@@ -15,7 +15,7 @@ panics (exit code 1) happen during execution and terminate the whole program wit
 <!--@include: ./_errors.generated.md-->
 
 ::: info Generated
-The code list is pulled directly from the interpreter's error registry (`weft/errors.py`), so a new
+The code list is pulled directly from the interpreter's error registry (`tantu/errors.py`), so a new
 code can't silently go undocumented.
 :::
 

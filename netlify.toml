@@ -1,0 +1,10 @@
+# Netlify builds this repo standalone: the language repo (../Combined Interpreter) is not
+# available here, so the build scripts fall back to the vendored wheel + examples committed in
+# playground/public/ (see scripts/build-tantu-assets.mjs and scripts/build-docs-assets.py).
+[build]
+  command = "npm ci --prefix playground && npm ci --prefix docs && node scripts/build-site.mjs"
+  publish = "docs/.vitepress/dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  PYTHON_VERSION = "3.12"

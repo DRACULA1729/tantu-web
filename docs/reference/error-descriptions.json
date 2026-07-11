@@ -1,11 +1,13 @@
 {
-  "L001": "Tabs are not allowed in indentation — Weft indents with spaces only.",
+  "L001": "Tabs are not allowed in indentation — Tantu indents with spaces only.",
   "L002": "An unindent does not line up with any enclosing indentation level.",
   "L003": "An illegal character appeared in the source.",
   "L004": "An unknown escape sequence appeared inside a string literal.",
   "L005": "A string literal was opened but never closed before end of line/file.",
+  "L006": "A numeric literal is malformed — for example a misplaced underscore like `1_`, `_5`, or `1._5`.",
   "P001": "An unexpected token was found where the grammar expected something else.",
   "P002": "The source ended in the middle of a construct the parser was still reading.",
+  "P003": "Expression, type, or pattern nesting is too deep for the parser to read safely.",
   "E0001": "This construct is syntactically valid but not supported in the current build.",
   "E0101": "A name is defined twice in the same scope.",
   "E0102": "Assignment to a `let` binding — declare it `var` if it must change.",
@@ -18,7 +20,7 @@
   "E0109": "An intrinsic (like `send`) was used outside call position; it is not a value.",
   "E0111": "A referenced name is not defined in any enclosing scope.",
   "E0112": "A value's type does not match the type expected here.",
-  "E0113": "`==`/`!=` used on a type Weft does not treat as comparable.",
+  "E0113": "`==`/`!=` used on a type Tantu does not treat as comparable.",
   "E0114": "`break`/`continue` used outside a loop.",
   "E0115": "A type annotation names a type that does not exist.",
   "E0116": "`return` used outside a function body.",
@@ -44,5 +46,8 @@
   "R005": "Deadlock — every fiber is blocked and none can make progress.",
   "R006": "A global was read before its initializer ran.",
   "R007": "A `match` at runtime found no matching arm (should be prevented by the checker).",
-  "R008": "Execution exceeded the playground's instruction budget (runaway loop safeguard)."
+  "R008": "Execution exceeded the playground's instruction budget (runaway loop safeguard).",
+  "R009": "A builtin hit a domain error at runtime (for example converting `nan`/`inf` to an integer).",
+  "R010": "The call stack overflowed — recursion exceeded the frame cap.",
+  "R011": "A channel was created with a negative capacity."
 }

@@ -1,23 +1,23 @@
 # Modules
 
-A Weft program is a set of sibling `*.weft` files in one directory. `import name` makes the members
-of `name.weft` available under a `name.` prefix.
+A Tantu program is a set of sibling `*.tn` files in one directory. `import name` makes the members
+of `name.tn` available under a `name.` prefix.
 
 ::: tip Playground note
 The playground has a single editor, so the multi-file examples on this page are marked so — run
-them locally with `python -m weft run main.weft`. Everything else in these docs runs in the browser.
+them locally with `python -m tantu run main.tn`. Everything else in these docs runs in the browser.
 :::
 
-```weft noplay
-# mathlib.weft
+```tantu noplay
+# mathlib.tn
 fn square(n: Int) -> Int:
     n * n
 
 let answer = 42
 ```
 
-```weft noplay
-# main.weft
+```tantu noplay
+# main.tn
 import mathlib
 
 fn main() -> Unit:
@@ -27,7 +27,7 @@ fn main() -> Unit:
 
 ## How a program is assembled
 
-Running `weft run main.weft`:
+Running `tantu run main.tn`:
 
 1. **Discovers** the import graph starting from the root file.
 2. **Checks** each module in dependency order (a module is checked after everything it imports).

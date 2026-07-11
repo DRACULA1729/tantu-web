@@ -1,14 +1,14 @@
 # Types & no-null
 
-Weft is statically typed, and it has **no `null`**. This page covers how types work and how Weft
+Tantu is statically typed, and it has **no `null`**. This page covers how types work and how Tantu
 models "no value" and "failure" as ordinary data.
 
 ## The inference boundary
 
-You annotate **signatures**; Weft infers **bodies**. Function parameter types and non-`Unit` return
+You annotate **signatures**; Tantu infers **bodies**. Function parameter types and non-`Unit` return
 types are required; local `let`/`var` types are usually inferred from the initializer.
 
-```weft
+```tantu
 fn twice(x: Int) -> Int:     # signature: annotated
     let y = x + x            # body: y is inferred as Int
     y
@@ -19,7 +19,7 @@ fn main() -> Unit:
 
 Add an annotation to a local when the type can't be inferred — most commonly an empty list:
 
-```weft
+```tantu
 fn main() -> Unit:
     let empty: List[Int] = []   # without the annotation this is E0107
     print(len(empty))
@@ -30,7 +30,7 @@ fn main() -> Unit:
 `let` bindings can't be reassigned; `var` bindings can. Assigning to a `let` is a compile error
 (`E0102`).
 
-```weft noplay
+```tantu noplay
 fn main() -> Unit:
     let x = 1
     x = 2          # error E0102: cannot assign to immutable binding 'x'
@@ -44,7 +44,7 @@ new one and leave the original alone.
 Absence is a value of type `Option[T]` — either `Some(value)` or `None`. There is no way to get a
 "null pointer": the type system forces you to handle the `None` case.
 
-```weft
+```tantu
 fn first_even(xs: List[Int]) -> Option[Int]:
     for x in xs:
         if x % 2 == 0:
@@ -62,7 +62,7 @@ fn main() -> Unit:
 `Result[T, E]` is `Ok(value)` or `Err(error)`. Use it when a caller might want to know *why*
 something failed.
 
-```weft
+```tantu
 fn parse_num(s: Str) -> Result[Int, Str]:
     match parse_int(s):
         Some(n) => Ok(n)
@@ -79,7 +79,7 @@ fn main() -> Unit:
 `?` unwraps an `Option` or `Result`, and on `None`/`Err` it **early-returns** from the enclosing
 function. It turns a chain of matches into a straight line.
 
-```weft
+```tantu
 fn parse_pair(s: Str) -> Result[(Int, Int), Str]:
     let parts = split(s, ",")
     if len(parts) != 2:

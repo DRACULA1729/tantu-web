@@ -1,8 +1,8 @@
 /// <reference lib="webworker" />
-// Pyodide worker: boots CPython-in-WASM, installs the weft wheel, loads the facade, then runs
+// Pyodide worker: boots CPython-in-WASM, installs the tantu wheel, loads the facade, then runs
 // evaluate(source) on demand. Kept as a module worker so the runaway-loop watchdog on the main
 // thread can terminate() and respawn it. The Pyodide runtime is fetched from the jsDelivr CDN;
-// only the weft wheel is served same-origin (its absolute URL is passed in the init message).
+// only the tantu wheel is served same-origin (its absolute URL is passed in the init message).
 import facadeSource from "./facade.py?raw";
 
 const PYODIDE_VERSION = "0.26.4";

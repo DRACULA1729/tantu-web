@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { EditorView } from "@codemirror/view";
-import { weft } from "../editor/weftLanguage";
-import { WeftRunner, type EvalResult, type Status } from "../worker/client";
+import { tantu } from "../editor/tantuLanguage";
+import { TantuRunner, type EvalResult, type Status } from "../worker/client";
 import { loadExamples, type Example } from "./examples";
 import { readHashSource, shareURL } from "./share";
 
-const DEFAULT_SOURCE = `# Welcome to the Weft playground.
+const DEFAULT_SOURCE = `# Welcome to the Tantu playground.
 # Edit and press Run (Ctrl/Cmd+Enter). Explore Tokens / AST / Bytecode.
 
 fn greet(name: Str) -> Str:
     return "Hello, " + name + "!"
 
 fn main() -> Unit:
-    print(greet("Weft"))
+    print(greet("Tantu"))
     let nums = [1, 2, 3, 4, 5]
     var total = 0
     for n in nums:
@@ -46,10 +46,10 @@ export default function App() {
   const [tab, setTab] = useState<Tab>("output");
   const [notice, setNotice] = useState<string>("");
   const [examples, setExamples] = useState<Example[]>([]);
-  const runnerRef = useRef<WeftRunner | null>(null);
+  const runnerRef = useRef<TantuRunner | null>(null);
 
   useEffect(() => {
-    const runner = new WeftRunner((s, detail) => {
+    const runner = new TantuRunner((s, detail) => {
       setStatus(s);
       setStatusDetail(detail ?? "");
     });
@@ -106,7 +106,7 @@ export default function App() {
     [run]
   );
 
-  const extensions = useMemo(() => [weft(), keymap, EditorView.lineWrapping], [keymap]);
+  const extensions = useMemo(() => [tantu(), keymap, EditorView.lineWrapping], [keymap]);
 
   const busy = status !== "ready";
 
@@ -114,7 +114,7 @@ export default function App() {
     <div className="app">
       <header className="topbar">
         <div className="brand">
-          <span className="logo">⋈</span> Weft <span className="sub">Playground</span>
+          <span className="logo">⋈</span> Tantu <span className="sub">Playground</span>
         </div>
         <div className="actions">
           <select

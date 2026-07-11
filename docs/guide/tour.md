@@ -1,10 +1,10 @@
 # Language tour
 
-A guided walk through Weft. Every block runs — hit **Try it ▶** and change things.
+A guided walk through Tantu. Every block runs — hit **Try it ▶** and change things.
 
 ## Values and bindings
 
-```weft
+```tantu
 fn main() -> Unit:
     let name = "Ada"        # immutable
     var count = 0           # mutable
@@ -13,12 +13,12 @@ fn main() -> Unit:
     print(count)
 ```
 
-`let` is immutable and is what you should reach for; `var` opts into mutation. Weft has the
+`let` is immutable and is what you should reach for; `var` opts into mutation. Tantu has the
 primitive types `Int`, `Float`, `Bool`, `Str`, and `Unit` (the empty value `()`).
 
 ## Functions
 
-```weft
+```tantu
 fn add(a: Int, b: Int) -> Int:
     a + b                   # the last expression is the return value
 
@@ -33,7 +33,7 @@ exits). Functions are ordinary values with a type like `(Int) -> Int`.
 
 ## Control flow is expression-oriented
 
-```weft
+```tantu
 fn main() -> Unit:
     let score = 85
     let grade = if score >= 90: "A" elif score >= 80: "B" else: "C"
@@ -50,7 +50,7 @@ An `if` used as an expression must have an `else`, and all branches must share a
 
 ## Enums, structs, and pattern matching
 
-```weft
+```tantu
 enum Color:
     Red
     Green
@@ -72,7 +72,7 @@ expression, so it produces a value.
 
 ## No null: Option and Result
 
-```weft
+```tantu
 fn find(id: Int) -> Option[Str]:
     if id == 1:
         return Some("ada")
@@ -84,12 +84,12 @@ fn main() -> Unit:
         None       => print("not found")
 ```
 
-There is no `null` in Weft. Absence is `Option[T]`; recoverable failure is `Result[T, E]`. You get
+There is no `null` in Tantu. Absence is `Option[T]`; recoverable failure is `Result[T, E]`. You get
 the value out by matching, or with the `?` operator — see [Types & no-null](/guide/types).
 
 ## Collections
 
-```weft
+```tantu
 fn main() -> Unit:
     let xs = [1, 2, 3]
     let ys = push(xs, 4)        # a NEW list; xs is unchanged
@@ -105,7 +105,7 @@ least two elements.
 
 ## Concurrency
 
-```weft
+```tantu
 fn worker(jobs: Chan[Int], out: Chan[Int]) -> Unit:
     loop:
         match recv(jobs):
@@ -135,7 +135,7 @@ fn main() -> Unit:
 
 ## Generics
 
-```weft
+```tantu
 fn map[T, U](xs: List[T], f: (T) -> U) -> List[U]:
     var out: List[U] = []
     for x in xs:

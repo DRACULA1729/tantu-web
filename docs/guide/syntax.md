@@ -1,6 +1,6 @@
 # Syntax
 
-Weft's surface is small and regular. This page is the reference for the shape of the language.
+Tantu's surface is small and regular. This page is the reference for the shape of the language.
 
 ## Layout: indentation, not braces
 
@@ -8,7 +8,7 @@ Blocks are introduced by a `:` and an increase in indentation, exactly like Pyth
 **spaces only** — a tab in indentation is a lexer error (`L001`). A block's body must be more
 indented than its header and consistently so.
 
-```weft
+```tantu
 fn main() -> Unit:
     if true:
         print("indented one level")
@@ -20,7 +20,7 @@ fn main() -> Unit:
 
 Line comments start with `#` and run to end of line. There are no block comments.
 
-```weft
+```tantu
 fn main() -> Unit:
     # this is a comment
     print("hi")   # trailing comment
@@ -46,7 +46,7 @@ match enum struct spawn select import and or not true false
 | `Str` | `"hello"`, with escapes like `\n`, `\t`, `\"`, `\\` |
 | `Unit` | `()` |
 
-```weft
+```tantu
 fn main() -> Unit:
     let big = 1_000_000
     let pi = 3.14159
@@ -69,7 +69,7 @@ fn main() -> Unit:
 for `Int`, `Float`, and `Str`. Both operands of a binary operator must have the **same** type —
 there is no implicit `Int`→`Float` widening (use `float(n)`).
 
-```weft
+```tantu
 fn main() -> Unit:
     print(17 / 5)          # 3  (floor division)
     print(17 % 5)          # 2

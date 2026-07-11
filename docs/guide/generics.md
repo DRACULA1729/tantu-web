@@ -5,7 +5,7 @@ over many types.
 
 ## Generic functions
 
-```weft
+```tantu
 fn map[T, U](xs: List[T], f: (T) -> U) -> List[U]:
     var out: List[U] = []
     for x in xs:
@@ -35,7 +35,7 @@ the checker can't pin down a type parameter it reports `E0119`.
 
 ## Generic data types
 
-```weft
+```tantu
 struct Pair[A, B]:
     first: A
     second: B
@@ -52,7 +52,7 @@ fn main() -> Unit:
 
 Enums can be generic too:
 
-```weft
+```tantu
 enum Tree[T]:
     Leaf
     Node(Tree[T], T, Tree[T])
@@ -69,12 +69,12 @@ fn main() -> Unit:
 
 ## What "parametric" means
 
-Weft's generics are **fully parametric** — there are no bounds or trait constraints. Inside a
+Tantu's generics are **fully parametric** — there are no bounds or trait constraints. Inside a
 generic body a type parameter `T` is **opaque**: you can pass it around, store it, put it in a
 list, match on it, and send it over a channel, but you cannot add, compare, or call it, because the
 checker knows nothing about what `T` supports.
 
-```weft noplay
+```tantu noplay
 fn bad[T](a: T, b: T) -> Bool:
     a == b        # error: T is opaque — nothing says it's comparable
 ```

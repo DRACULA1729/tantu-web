@@ -1,6 +1,6 @@
 # Under the hood
 
-Weft isn't magic — it's a small, readable pipeline you can watch run. This page sketches what
+Tantu isn't magic — it's a small, readable pipeline you can watch run. This page sketches what
 happens between the text you write and the output you see, and points you at the playground's
 inspector so you can see each stage for yourself.
 
@@ -29,12 +29,12 @@ is in the editor:
 
 - **Tokens** — the lexer's output.
 - **AST** — the parsed tree, pretty-printed.
-- **Bytecode** — the compiler's disassembly (the same thing `python -m weft dis` prints).
+- **Bytecode** — the compiler's disassembly (the same thing `python -m tantu dis` prints).
 
 Try this program, then flip through the tabs to watch it turn into tokens, a tree, and finally
 stack instructions:
 
-```weft
+```tantu
 fn main() -> Unit:
     let x = 2 + 3 * 4
     print(x)
@@ -49,7 +49,7 @@ cost nothing at runtime: a generic function is just one ordinary function.
 
 ## Why a bytecode VM?
 
-Weft is built from scratch to be understandable end to end: a hand-written lexer and parser (no
+Tantu is built from scratch to be understandable end to end: a hand-written lexer and parser (no
 parser generator), an explicit type checker, a compact instruction set, and a stack VM with a
 cooperative scheduler — all in pure Python with no third-party runtime dependencies. The
 [playground](/play/){target="_blank" rel="noopener"} runs that exact interpreter, compiled to WebAssembly, in your
