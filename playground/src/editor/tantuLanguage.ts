@@ -1,4 +1,4 @@
-// A CodeMirror 6 StreamLanguage for Weft, authored from weft/tokens.py (KEYWORDS) + the type
+// A CodeMirror 6 StreamLanguage for Tantu, authored from tantu/tokens.py (KEYWORDS) + the type
 // names and operators in DESIGN.md. This is one of two artifacts derived from the same token set;
 // the docs site's Shiki TextMate grammar (Phase 2) is the other.
 import { StreamLanguage, LanguageSupport, type StringStream } from "@codemirror/language";
@@ -21,7 +21,7 @@ const BUILTINS = new Set([
   "Some", "None", "Ok", "Err",
 ]);
 
-const weftParser = {
+const tantuParser = {
   startState() {
     return {};
   },
@@ -85,6 +85,6 @@ const weftParser = {
   },
 };
 
-export function weft(): LanguageSupport {
-  return new LanguageSupport(StreamLanguage.define(weftParser));
+export function tantu(): LanguageSupport {
+  return new LanguageSupport(StreamLanguage.define(tantuParser));
 }

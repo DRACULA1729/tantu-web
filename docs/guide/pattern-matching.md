@@ -1,11 +1,11 @@
 # Pattern matching
 
-`match` is how you take data apart in Weft. It is an **expression** (it produces a value) and it is
+`match` is how you take data apart in Tantu. It is an **expression** (it produces a value) and it is
 **exhaustive** (the checker makes you handle every case).
 
 ## Matching enums
 
-```weft
+```tantu
 enum Signal:
     Stop
     Go
@@ -32,7 +32,7 @@ fn main() -> Unit:
 
 Patterns nest, so you can destructure deeply in one arm:
 
-```weft
+```tantu
 fn describe(p: (Int, Option[Str])) -> Str:
     match p:
         (0, None)       => "zero, nothing"
@@ -53,7 +53,7 @@ fn main() -> Unit:
 
 The checker rejects a `match` that misses a case. This won't compile — it forgets `Blue`:
 
-```weft noplay
+```tantu noplay
 enum Hue:
     Red
     Blue
@@ -67,7 +67,7 @@ A binding or wildcard arm covers "everything else", but once you write one, any 
 **unreachable** (`E0120`). For `Int` and `Str` matches — which have unbounded value sets — a
 trailing wildcard or binding arm is required.
 
-```weft
+```tantu
 fn size(n: Int) -> Str:
     match n:
         0 => "none"
@@ -84,7 +84,7 @@ fn main() -> Unit:
 Because `match` is an expression, all its arms must produce the same type, and you can use it
 anywhere a value is expected:
 
-```weft
+```tantu
 fn main() -> Unit:
     let x = 2
     let label = match x:

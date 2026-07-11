@@ -1,20 +1,20 @@
-# Weft playground facade — lives in the PLAYGROUND repo, not the language repo.
+# Tantu playground facade — lives in the PLAYGROUND repo, not the language repo.
 #
 # Executed once in the Pyodide worker via runPython, then JS calls evaluate(source) per Run.
-# It reuses weft's own public APIs and returns ONE JSON-able dict so the JS<->Python boundary is a
+# It reuses tantu's own public APIs and returns ONE JSON-able dict so the JS<->Python boundary is a
 # single round-trip. A virtual clock makes sleep()/channel programs finish instantly and
 # deterministically (mirrors tests/harness.py::_VirtualClock). step_limit turns a runaway loop into
 # an in-band panic (R008) instead of hanging the worker.
 import io
 
-from weft.lexer import tokenize
-from weft.parser import parse
-from weft.checker import check
-from weft.compiler import compile_module
-from weft.vm import VM
-from weft.errors import WeftError, CheckErrors, render_error, render_errors
+from tantu.lexer import tokenize
+from tantu.parser import parse
+from tantu.checker import check
+from tantu.compiler import compile_module
+from tantu.vm import VM
+from tantu.errors import TantuError, CheckErrors, render_error, render_errors
 
-_FILE = "playground.weft"
+_FILE = "playground.tn"
 
 
 class _Clock:
@@ -48,7 +48,7 @@ def evaluate(source, step_limit=2_000_000):
         checked = check(mod)
         code = compile_module(checked)
         result["dis"] = code.dis()
-    except (WeftError, CheckErrors):
+    except (TantuError, CheckErrors):
         pass  # the run path below re-runs the pipeline and renders the error properly
 
     # --- run path: reuse the CLI's exact behavior on a virtual clock ---
@@ -64,7 +64,7 @@ def evaluate(source, step_limit=2_000_000):
     except CheckErrors as e:
         err.write(render_errors(source, e.errors) + "\n")
         result["exit"] = 2
-    except WeftError as e:
+    except TantuError as e:
         err.write(render_error(source, e) + "\n")
         result["exit"] = 2
 

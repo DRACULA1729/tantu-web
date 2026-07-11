@@ -3,9 +3,9 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import type MarkdownIt from "markdown-it";
 
-// The Weft TextMate grammar is generated from the language repo by scripts/build-docs-assets.py.
-const weftGrammar = JSON.parse(
-  readFileSync(fileURLToPath(new URL("./weft.tmLanguage.json", import.meta.url)), "utf-8")
+// The Tantu TextMate grammar is generated from the language repo by scripts/build-docs-assets.py.
+const tantuGrammar = JSON.parse(
+  readFileSync(fileURLToPath(new URL("./tantu.tmLanguage.json", import.meta.url)), "utf-8")
 );
 
 // Combined deploy: docs at the root, the playground mounted at /play/.
@@ -15,7 +15,7 @@ function base64url(s: string): string {
   return Buffer.from(s, "utf-8").toString("base64url");
 }
 
-// Append a "Try it ▶" button to every ```weft fence, linking to the playground with the snippet
+// Append a "Try it ▶" button to every ```tantu fence, linking to the playground with the snippet
 // preloaded via the #code= share format (identical to playground/src/playground/share.ts).
 function tryItPlugin(md: MarkdownIt): void {
   const defaultFence = md.renderer.rules.fence!;
@@ -23,12 +23,12 @@ function tryItPlugin(md: MarkdownIt): void {
     const token = tokens[idx];
     const parts = token.info.trim().split(/\s+/);
     const rendered = defaultFence(tokens, idx, options, env, self);
-    // Only runnable Weft blocks get a button; `weft noplay` (error demos, fragments) is still
+    // Only runnable Tantu blocks get a button; `tantu noplay` (error demos, fragments) is still
     // highlighted but gets no button.
-    if (parts[0] !== "weft" || parts.includes("noplay")) return rendered;
+    if (parts[0] !== "tantu" || parts.includes("noplay")) return rendered;
     const href = `${BASE}play/#code=${base64url(token.content.replace(/\n$/, ""))}`;
     return (
-      `<div class="weft-block">` +
+      `<div class="tantu-block">` +
       rendered +
       `<a class="try-it" href="${href}" target="_blank" rel="noopener">Try it ▶</a>` +
       `</div>`
@@ -55,7 +55,7 @@ const servePlayIndex = {
 };
 
 export default defineConfig({
-  title: "Weft",
+  title: "Tantu",
   description:
     "A statically-typed, Python-readable language with fibers and channels — compiled to bytecode and run on a hand-built stack VM.",
   base: BASE,
@@ -65,7 +65,7 @@ export default defineConfig({
     plugins: [servePlayIndex],
   },
   markdown: {
-    languages: [weftGrammar as any],
+    languages: [tantuGrammar as any],
     config: (md) => tryItPlugin(md),
   },
   themeConfig: {

@@ -1,6 +1,6 @@
 # Concurrency
 
-Weft's concurrency is **CSP** — the model behind Go. You start lightweight **fibers** with `spawn`,
+Tantu's concurrency is **CSP** — the model behind Go. You start lightweight **fibers** with `spawn`,
 and they communicate by passing messages over typed **channels** rather than sharing memory. There
 is no shared mutable state to race on (closures capture by value, and you can't capture a `var`).
 
@@ -11,7 +11,7 @@ produce the same output every time — which is why the examples below are runna
 
 A channel carries values of one type. `chan[T](n)` makes one with a buffer of size `n`.
 
-```weft
+```tantu
 fn main() -> Unit:
     let ch = chan[Int](2)
     send(ch, 1)
@@ -33,7 +33,7 @@ for a value, or `None` when the channel is closed and drained. That is why you a
 `spawn f(args)` runs `f` as a fiber. The classic pattern is a worker draining a jobs channel and
 writing results to another:
 
-```weft
+```tantu
 fn worker(jobs: Chan[Int], out: Chan[Int]) -> Unit:
     loop:
         match recv(jobs):
@@ -65,7 +65,7 @@ drains what's left and then yields `None`.
 `select` waits on several channel operations at once and runs the first one that's ready. Arms are
 polled in source order, so ties resolve deterministically. An `else` arm makes it non-blocking.
 
-```weft
+```tantu
 fn main() -> Unit:
     let a = chan[Int](1)
     let b = chan[Int](1)
@@ -86,7 +86,7 @@ fn main() -> Unit:
 There's no timer arm in `select`; the idiom is to race your real work against a fiber that sleeps
 and then signals on a timeout channel.
 
-```weft
+```tantu
 fn timer(ms: Int, done: Chan[Int]) -> Unit:
     sleep(ms)
     send(done, 1)

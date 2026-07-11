@@ -1,7 +1,7 @@
-# Weft Web
+# Tantu Web
 
-The **playground** and **documentation site** for the [Weft](../Combined%20Interpreter) language.
-The playground lets you write Weft, run it, and inspect the compiler pipeline (tokens → AST →
+The **playground** and **documentation site** for the [Tantu](../Combined%20Interpreter) language.
+The playground lets you write Tantu, run it, and inspect the compiler pipeline (tokens → AST →
 bytecode); the **real** interpreter runs in the browser via [Pyodide](https://pyodide.org)
 (CPython-in-WASM), no backend. The docs are a VitePress site whose runnable snippets link straight
 into the playground.
@@ -13,18 +13,18 @@ scripts, never modified in place.
 ## Layout
 
 ```
-weft-web/
+tantu-web/
   playground/        React + Vite + TypeScript playground
     public/          built wheel + examples (generated — see below)
     src/worker/      Pyodide worker + facade.py + main-thread client (watchdog, respawn)
-    src/editor/      CodeMirror 6 Weft StreamLanguage
+    src/editor/      CodeMirror 6 Tantu StreamLanguage
     src/playground/  App, tabs, examples gallery, share-by-URL
   docs/              VitePress docs site (guide + generated references)
-    .vitepress/      config (nav, Shiki weft grammar, the "Try it ▶" plugin) + theme
+    .vitepress/      config (nav, Shiki tantu grammar, the "Try it ▶" plugin) + theme
     guide/, reference/
     public/play/     the built playground, mounted here (generated)
   scripts/
-    build-weft-assets.mjs   builds the weft wheel + copies examples into playground/public/
+    build-tantu-assets.mjs   builds the tantu wheel + copies examples into playground/public/
     build-docs-assets.py    generates the Shiki grammar + error/builtin reference tables
     copy-play.mjs           builds the playground and copies it into docs/public/play/
     build-site.mjs          one-shot combined build (docs at /, playground at /play/)
@@ -45,13 +45,13 @@ Build the whole combined site (docs at `/`, playground at `/play/`) in one shot:
 node scripts/build-site.mjs   # output → docs/.vitepress/dist/
 ```
 
-- **Generated, never hand-maintained:** the Shiki `weft` grammar comes from `weft/tokens.py`; the
+- **Generated, never hand-maintained:** the Shiki `tantu` grammar comes from `tantu/tokens.py`; the
   builtins table from Appendix A / `BUILTIN_SIGS`; the error-code table from every constant in
-  `weft/errors.py` merged with curated one-liners in `docs/reference/error-descriptions.json`. The
+  `tantu/errors.py` merged with curated one-liners in `docs/reference/error-descriptions.json`. The
   generator **fails loudly** if a language error code has no description, so docs can't silently
   drift behind the language.
-- **"Try it ▶":** a markdown-it plugin appends a button to every runnable ` ```weft ` block linking
-  to `{base}play/#code=<base64url>` (the Phase-1 share format). Tag a block ` ```weft noplay ` to
+- **"Try it ▶":** a markdown-it plugin appends a button to every runnable ` ```tantu ` block linking
+  to `{base}play/#code=<base64url>` (the Phase-1 share format). Tag a block ` ```tantu noplay ` to
   highlight it without a button (error demos, multi-file module snippets).
 - VitePress dev doesn't rebuild the playground; `npm run dev` copies a prebuilt `play/` into
   `public/` first, so "Try it" uses that static copy in dev.
@@ -75,23 +75,23 @@ npm install
 npm run dev        # runs the asset build, then starts Vite on :5173
 ```
 
-`npm run dev` / `npm run build` both run `scripts/build-weft-assets.mjs` first, which:
+`npm run dev` / `npm run build` both run `scripts/build-tantu-assets.mjs` first, which:
 
-1. copies `../Combined Interpreter/{pyproject.toml,weft/}` into a temp dir and builds the wheel
+1. copies `../Combined Interpreter/{pyproject.toml,tantu/}` into a temp dir and builds the wheel
    **there** (so the language repo is never written to — no `build/` or `*.egg-info`),
-2. copies the wheel + a `weft-wheel.json` manifest into `playground/public/`,
-3. copies `../Combined Interpreter/examples/*.weft` into `playground/public/examples/` and writes
+2. copies the wheel + a `tantu-wheel.json` manifest into `playground/public/`,
+3. copies `../Combined Interpreter/examples/*.tn` into `playground/public/examples/` and writes
    an `index.json` the examples gallery fetches.
 
 Re-run it (`npm run assets`) whenever the language changes to resync the wheel + examples — it is
 the single seam between the two repos.
 
-## How it runs Weft
+## How it runs Tantu
 
 `src/worker/pyodide.worker.ts` boots Pyodide (from the jsDelivr CDN), `micropip.install`s the
 same-origin wheel, then runs `src/worker/facade.py` once. Each Run calls the facade's
 `evaluate(source)`, which returns `{stdout, stderr, exit, tokens, ast, dis}` in one round-trip by
-reusing weft's own `tokenize` / `parse` / `check` / `compile_module` / `VM` APIs. A virtual clock
+reusing tantu's own `tokenize` / `parse` / `check` / `compile_module` / `VM` APIs. A virtual clock
 makes `sleep`/channel programs finish instantly and deterministically.
 
 ### Infinite-loop safety (two layers)

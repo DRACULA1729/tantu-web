@@ -2,7 +2,7 @@
 
 ## Declaring functions
 
-```weft
+```tantu
 fn add(a: Int, b: Int) -> Int:
     a + b
 
@@ -19,10 +19,10 @@ the return value; `return expr` is available for early exits, and a bare `return
 
 ## Order doesn't matter
 
-Module-level functions may call each other regardless of the order they're written — Weft checks
+Module-level functions may call each other regardless of the order they're written — Tantu checks
 all signatures first, then the bodies. Recursion and mutual recursion just work.
 
-```weft
+```tantu
 fn is_even(n: Int) -> Bool:
     if n == 0:
         true
@@ -44,7 +44,7 @@ fn main() -> Unit:
 
 A function has a type like `(Int, Int) -> Int` and can be passed, stored, and returned.
 
-```weft
+```tantu
 fn apply(f: (Int) -> Int, x: Int) -> Int:
     f(x)
 
@@ -59,7 +59,7 @@ fn main() -> Unit:
 
 Anonymous functions use `fn` with no name — an inline expression body, or an indented block:
 
-```weft
+```tantu
 fn main() -> Unit:
     let double = fn(x: Int) -> Int: x * 2
     let clamp = fn(x: Int) -> Int:
@@ -73,7 +73,7 @@ fn main() -> Unit:
 
 A closure captures the `let` bindings it references from the enclosing scope, **by value**:
 
-```weft
+```tantu
 fn adder(n: Int) -> (Int) -> Int:
     fn(x: Int) -> Int: x + n     # captures n
 
@@ -89,7 +89,7 @@ this is deliberate — it removes a whole class of data races between fibers and
 to reason about. If you need a mutable value's current contents in a closure, copy it into a `let`
 first.
 
-```weft noplay
+```tantu noplay
 fn main() -> Unit:
     var count = 0
     let show = fn() -> Int: count   # error E0103: cannot capture mutable binding 'count'

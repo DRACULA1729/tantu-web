@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: Weft
+  name: Tantu
   text: A small language with big ideas
   tagline: Python-readable syntax, static types with no null, and Go-style concurrency — compiled to bytecode and run on a hand-built stack VM.
   actions:
@@ -20,7 +20,7 @@ hero:
 
 features:
   - title: Readable by design
-    details: Indentation-based blocks and a familiar, expression-oriented syntax. If you can read Python, you can read Weft.
+    details: Indentation-based blocks and a familiar, expression-oriented syntax. If you can read Python, you can read Tantu.
   - title: No null, no surprises
     details: Absence and failure are values — Option[T] and Result[T, E] — unwrapped by match or the ? operator. The type checker has your back.
   - title: Concurrency without shared state
@@ -29,9 +29,9 @@ features:
     details: A real pipeline — lexer → parser → checker → compiler → linker → stack VM — that you can inspect end to end in the playground.
 ---
 
-## Weft in thirty seconds
+## Tantu in thirty seconds
 
-```weft
+```tantu
 enum Shape:
     Circle(Float)
     Rect(Float, Float)

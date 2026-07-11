@@ -1,5 +1,5 @@
-// Examples gallery data, built by scripts/build-weft-assets.mjs from the language repo's
-// examples/*.weft (public/examples/index.json).
+// Examples gallery data, built by scripts/build-tantu-assets.mjs from the language repo's
+// examples/*.tn (public/examples/index.json).
 export interface Example {
   name: string;
   title: string;

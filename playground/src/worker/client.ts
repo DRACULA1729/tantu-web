@@ -20,7 +20,7 @@ export type Status = "booting" | "ready" | "error";
 
 const WATCHDOG_MS = 5000;
 
-export class WeftRunner {
+export class TantuRunner {
   private worker: Worker | null = null;
   private wheelURL = "";
   private nextId = 1;
@@ -36,9 +36,9 @@ export class WeftRunner {
 
   async init(): Promise<void> {
     const base = import.meta.env.BASE_URL;
-    const manifestURL = new URL(base + "weft-wheel.json", location.href).href;
+    const manifestURL = new URL(base + "tantu-wheel.json", location.href).href;
     const manifest = await fetch(manifestURL).then((r) => {
-      if (!r.ok) throw new Error(`cannot load weft-wheel.json (${r.status})`);
+      if (!r.ok) throw new Error(`cannot load tantu-wheel.json (${r.status})`);
       return r.json();
     });
     this.wheelURL = new URL(base + manifest.wheel, location.href).href;
