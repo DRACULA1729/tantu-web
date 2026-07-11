@@ -1,0 +1,62 @@
+[
+  {
+    "name": "arithmetic.tn",
+    "title": "arithmetic",
+    "source": "fn main() -> Unit:\n    print(1 + 2 * 3)\n    print((10 - 4) / 2)\n    print(17 % 5)\n"
+  },
+  {
+    "name": "channels.tn",
+    "title": "channels",
+    "source": "fn worker(jobs: Chan[Int], out: Chan[Int]) -> Unit:\n    loop:\n        match recv(jobs):\n            Some(n) => send(out, n * n)\n            None => break\n\nfn main() -> Unit:\n    let jobs = chan[Int](8)\n    let out = chan[Int](8)\n    spawn worker(jobs, out)\n    var i = 1\n    while i <= 4:\n        send(jobs, i)\n        i = i + 1\n    close(jobs)\n    var got = 0\n    while got < 4:\n        match recv(out):\n            Some(v) => print(v)\n            None => break\n        got = got + 1\n"
+  },
+  {
+    "name": "closures.tn",
+    "title": "closures",
+    "source": "fn make_adder(n: Int) -> (Int) -> Int:\n    fn(x: Int) -> Int: x + n\n\nfn main() -> Unit:\n    let add10 = make_adder(10)\n    print(add10(5))\n    print(add10(32))\n"
+  },
+  {
+    "name": "collections.tn",
+    "title": "collections",
+    "source": "struct Point:\n    x: Int\n    y: Int\n\nfn main() -> Unit:\n    let pts = [Point(1, 2), Point(3, 4), Point(5, 6)]\n    var sum = 0\n    for p in pts:\n        sum = sum + p.x + p.y\n    print(sum)\n    print(len(pts))\n"
+  },
+  {
+    "name": "fib.tn",
+    "title": "fib",
+    "source": "fn fib(n: Int) -> Int:\n    if n < 2:\n        return n\n    fib(n - 1) + fib(n - 2)\n\nfn main() -> Unit:\n    print(fib(20))\n"
+  },
+  {
+    "name": "fizzbuzz.tn",
+    "title": "fizzbuzz",
+    "source": "fn main() -> Unit:\n    var n = 1\n    while n <= 15:\n        if n % 15 == 0:\n            print(\"FizzBuzz\")\n        elif n % 3 == 0:\n            print(\"Fizz\")\n        elif n % 5 == 0:\n            print(\"Buzz\")\n        else:\n            print(n)\n        n = n + 1\n"
+  },
+  {
+    "name": "generics.tn",
+    "title": "generics",
+    "source": "# Generics let one definition work over any type. They are fully parametric (no bounds) and\n# ERASED — a generic fn compiles to a single function; type arguments are always inferred.\n\nfn map[T, U](xs: List[T], f: (T) -> U) -> List[U]:\n    var out: List[U] = []\n    for x in xs:\n        out = push(out, f(x))\n    out\n\nfn fold[T, A](xs: List[T], init: A, step: (A, T) -> A) -> A:\n    var acc = init\n    for x in xs:\n        acc = step(acc, x)\n    acc\n\n# a generic data structure, used at two different element types\nstruct Pair[A, B]:\n    first: A\n    second: B\n\nfn swap[A, B](p: Pair[A, B]) -> Pair[B, A]:\n    Pair(p.second, p.first)\n\nfn dbl(n: Int) -> Int:\n    n * 2\n\nfn add(a: Int, b: Int) -> Int:\n    a + b\n\nfn main() -> Unit:\n    let nums = [1, 2, 3, 4]\n    print(map(nums, dbl))          # [2, 4, 6, 8]\n    print(fold(nums, 0, add))      # 10\n\n    let p = Pair(1, \"one\")\n    let q = swap(p)                # Pair[Str, Int]\n    print(q.first)                 # one\n    print(q.second)                # 1\n"
+  },
+  {
+    "name": "hello.tn",
+    "title": "hello",
+    "source": "fn main() -> Unit:\n    print(\"hello, world\")\n"
+  },
+  {
+    "name": "options.tn",
+    "title": "options",
+    "source": "fn checked_div(a: Int, b: Int) -> Result[Int, Str]:\n    if b == 0:\n        Err(\"divide by zero\")\n    else:\n        Ok(a / b)\n\nfn compute(a: Int, b: Int, c: Int) -> Result[Int, Str]:\n    let x = checked_div(a, b)?\n    let y = checked_div(x, c)?\n    Ok(y)\n\nfn main() -> Unit:\n    print(compute(100, 5, 2))\n    print(compute(100, 0, 2))\n"
+  },
+  {
+    "name": "select.tn",
+    "title": "select",
+    "source": "# `select` waits on several channels at once and takes the first ready arm.\n# The canonical use is a timeout: race real work against a fiber that sleeps then signals.\n\nfn worker(result: Chan[Int]) -> Unit:\n    sleep(10)             # pretend this is real work\n    send(result, 42)\n\nfn timeout(fired: Chan[Bool]) -> Unit:\n    sleep(50)             # deadline: 50ms\n    send(fired, true)\n\nfn main() -> Unit:\n    let result = chan[Int]()\n    let fired = chan[Bool]()\n    spawn worker(result)\n    spawn timeout(fired)\n\n    # the worker (10ms) beats the timeout (50ms), so the first arm wins\n    select:\n        v = recv(result) =>\n            match v:\n                Some(n) => print(n)\n                None => print(\"worker channel closed\")\n        deadline = recv(fired) =>\n            print(\"timed out\")\n"
+  },
+  {
+    "name": "shapes.tn",
+    "title": "shapes",
+    "source": "enum Shape:\n    Circle(Float)\n    Rect(Float, Float)\n\nfn area(s: Shape) -> Float:\n    match s:\n        Circle(r) => 3.14159 * r * r\n        Rect(w, h) => w * h\n\nfn main() -> Unit:\n    print(area(Circle(2.0)))\n    print(area(Rect(3.0, 4.0)))\n"
+  },
+  {
+    "name": "wordfreq.tn",
+    "title": "wordfreq",
+    "source": "struct WC:\n    word: Str\n    count: Int\n\nfn bump(acc: List[WC], w: Str) -> List[WC]:\n    var out: List[WC] = []\n    var found = false\n    for e in acc:\n        if e.word == w:\n            out = push(out, WC(e.word, e.count + 1))\n            found = true\n        else:\n            out = push(out, e)\n    if found:\n        out\n    else:\n        push(out, WC(w, 1))\n\nfn main() -> Unit:\n    let words = split(\"the cat the dog the cat\", \" \")\n    var acc: List[WC] = []\n    for w in words:\n        acc = bump(acc, w)\n    for e in acc:\n        print(e.word + \": \" + str(e.count))\n"
+  }
+]

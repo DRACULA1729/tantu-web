@@ -20,7 +20,7 @@ tantu-web/
     src/editor/      CodeMirror 6 Tantu StreamLanguage
     src/playground/  App, tabs, examples gallery, share-by-URL
   docs/              VitePress docs site (guide + generated references)
-    .vitepress/      config (nav, Shiki tantu grammar, the "Try it ▶" plugin) + theme
+    .vitepress/      config (nav, Shiki tantu grammar, the "Try it " plugin) + theme
     guide/, reference/
     public/play/     the built playground, mounted here (generated)
   scripts/
@@ -50,7 +50,7 @@ node scripts/build-site.mjs   # output → docs/.vitepress/dist/
   `tantu/errors.py` merged with curated one-liners in `docs/reference/error-descriptions.json`. The
   generator **fails loudly** if a language error code has no description, so docs can't silently
   drift behind the language.
-- **"Try it ▶":** a markdown-it plugin appends a button to every runnable ` ```tantu ` block linking
+- **"Try it ":** a markdown-it plugin appends a button to every runnable ` ```tantu ` block linking
   to `{base}play/#code=<base64url>` (the Phase-1 share format). Tag a block ` ```tantu noplay ` to
   highlight it without a button (error demos, multi-file module snippets).
 - VitePress dev doesn't rebuild the playground; `npm run dev` copies a prebuilt `play/` into
@@ -86,6 +86,20 @@ npm run dev        # runs the asset build, then starts Vite on :5173
 Re-run it (`npm run assets`) whenever the language changes to resync the wheel + examples — it is
 the single seam between the two repos.
 
+**Vendored assets:** the wheel, `tantu-wheel.json`, and `playground/public/examples/` are
+*committed*, not just generated, so the repo builds standalone when the language repo isn't
+checked out next to it (CI, Netlify, a bare clone). Without `../Combined Interpreter`,
+`build-tantu-assets.mjs` uses the vendored copies as-is and `build-docs-assets.py` imports the
+language modules straight from the vendored wheel (a pure-Python wheel is zip-importable). After
+resyncing with `npm run assets`, commit the changed assets.
+
+## Deploy (Netlify)
+
+`netlify.toml` builds the combined site with `node scripts/build-site.mjs` (installing
+playground/ and docs/ deps first) and publishes `docs/.vitepress/dist/`. Thanks to the vendored
+assets this needs only Node + a stock `python3` — no language repo, no `.build-venv`. Pushing a
+new wheel to production = `npm run assets` in `playground/`, commit, push.
+
 ## How it runs Tantu
 
 `src/worker/pyodide.worker.ts` boots Pyodide (from the jsDelivr CDN), `micropip.install`s the
@@ -105,4 +119,4 @@ makes `sleep`/channel programs finish instantly and deterministically.
 ## Share links
 
 Source is encoded in the URL hash as `#code=<base64url(source)>`. This format is the contract the
-Phase-2 docs site's "Try it ▶" links build against — keep it stable.
+Phase-2 docs site's "Try it " links build against — keep it stable.

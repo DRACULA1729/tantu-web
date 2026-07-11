@@ -12,16 +12,34 @@ language code forces a docs update instead of silently going missing.
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 WEB = HERE.parent
-LANG_REPO = (WEB / ".." / "Combined Interpreter").resolve()
+LANG_REPO = Path(os.environ.get("TANTU_LANG_REPO", WEB / ".." / "Combined Interpreter")).resolve()
 DOCS = WEB / "docs"
 
-sys.path.insert(0, str(LANG_REPO))  # import the real language modules (pure-Python, stdlib-only)
+# Import the real language modules (pure-Python, stdlib-only): from the language repo when it's
+# checked out next to us, otherwise from the vendored wheel in playground/public/ (a pure-Python
+# wheel is a zip, so putting it on sys.path makes its packages importable). The wheel fallback is
+# what lets CI (e.g. Netlify) build the docs without the language repo.
+if LANG_REPO.exists():
+    sys.path.insert(0, str(LANG_REPO))
+else:
+    _public = WEB / "playground" / "public"
+    _manifest = _public / "tantu-wheel.json"
+    if not _manifest.exists():
+        sys.stderr.write(
+            f"[build-docs-assets] ERROR: language repo not found at {LANG_REPO} "
+            f"and no vendored wheel manifest at {_manifest}\n"
+        )
+        sys.exit(1)
+    _wheel = _public / json.loads(_manifest.read_text())["wheel"]
+    print(f"[build-docs-assets] language repo not found — importing from vendored {_wheel.name}")
+    sys.path.insert(0, str(_wheel))
 
 import tantu.errors as werrors          # noqa: E402
 from tantu.prelude import BUILTIN_SIGS  # noqa: E402
@@ -124,8 +142,6 @@ def gen_builtins() -> str:
 
 
 def main() -> None:
-    if not LANG_REPO.exists():
-        _fail(f"language repo not found at {LANG_REPO}")
     (DOCS / ".vitepress").mkdir(parents=True, exist_ok=True)
     (DOCS / "reference").mkdir(parents=True, exist_ok=True)
 

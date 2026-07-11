@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const webRoot = resolve(here, "..");
-const langRepo = resolve(webRoot, "..", "Combined Interpreter");
+const langRepo = resolve(process.env.TANTU_LANG_REPO ?? resolve(webRoot, "..", "Combined Interpreter"));
 const publicDir = resolve(webRoot, "playground", "public");
 const examplesOut = join(publicDir, "examples");
 const buildPython = join(webRoot, ".build-venv", "bin", "python");
@@ -28,7 +28,19 @@ function fail(msg) {
   process.exit(1);
 }
 
-if (!existsSync(langRepo)) fail(`language repo not found at ${langRepo}`);
+// Without the language repo (CI, Netlify, a bare clone), fall back to the vendored assets
+// committed in playground/public/. Regeneration only happens when the repo is present.
+if (!existsSync(langRepo)) {
+  const manifest = join(publicDir, "tantu-wheel.json");
+  if (!existsSync(manifest)) {
+    fail(`language repo not found at ${langRepo} and no vendored ${manifest} to fall back to`);
+  }
+  const { wheel } = JSON.parse(readFileSync(manifest, "utf8"));
+  if (!existsSync(join(publicDir, wheel))) fail(`vendored wheel ${wheel} missing from ${publicDir}`);
+  if (!existsSync(join(examplesOut, "index.json"))) fail(`vendored examples/index.json missing from ${examplesOut}`);
+  console.log(`[build-tantu-assets] language repo not found — using vendored ${wheel} + examples/`);
+  process.exit(0);
+}
 if (!existsSync(join(langRepo, "pyproject.toml"))) fail(`pyproject.toml not found in ${langRepo}`);
 if (!existsSync(buildPython)) {
   fail(
@@ -60,6 +72,10 @@ try {
   if (!wheel) fail("no .whl produced by the build");
 
   mkdirSync(publicDir, { recursive: true });
+  // Drop superseded wheels (version bumps) so the vendored set never accumulates stale ones.
+  for (const old of readdirSync(publicDir).filter((f) => f.startsWith("tantu-") && f.endsWith(".whl"))) {
+    rmSync(join(publicDir, old));
+  }
   cpSync(join(wheelsDir, wheel), join(publicDir, wheel));
   // The worker reads this manifest to learn the exact wheel filename (version-agnostic).
   writeFileSync(join(publicDir, "tantu-wheel.json"), JSON.stringify({ wheel }, null, 2) + "\n");
@@ -69,7 +85,9 @@ try {
 }
 
 // 2. Copy examples/*.tn and emit an index the gallery can fetch (no dir listing at runtime).
+// Recreate the directory from scratch so examples removed from the language repo disappear too.
 const srcExamples = join(langRepo, "examples");
+rmSync(examplesOut, { recursive: true, force: true });
 mkdirSync(examplesOut, { recursive: true });
 const index = [];
 if (existsSync(srcExamples)) {

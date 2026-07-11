@@ -2,16 +2,20 @@
 // One-shot combined build: generates docs assets, builds the playground into docs/public/play,
 // then builds the VitePress site. Output: docs/.vitepress/dist/ (docs at /, playground at /play/).
 import { execFileSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const web = resolve(here, "..");
 const docs = join(web, "docs");
-const buildPython = join(web, ".build-venv", "bin", "python");
+// The docs generator is stdlib-only, so any python3 works when the local build venv is absent
+// (CI/Netlify — there it imports the language modules from the vendored wheel).
+const venvPython = join(web, ".build-venv", "bin", "python");
+const buildPython = existsSync(venvPython) ? venvPython : "python3";
 
 const run = (cmd, args, cwd) => {
-  console.log(`\n▶ ${cmd} ${args.join(" ")}  (cwd: ${cwd})`);
+  console.log(`\n ${cmd} ${args.join(" ")}  (cwd: ${cwd})`);
   execFileSync(cmd, args, { cwd, stdio: "inherit" });
 };
 
