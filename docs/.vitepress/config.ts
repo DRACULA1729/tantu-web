@@ -59,6 +59,11 @@ export default defineConfig({
   description:
     "A statically-typed, Python-readable language with fibers and channels, compiled to bytecode and run on a hand-built stack VM.",
   base: BASE,
+  head: [
+    ["link", { rel: "icon", type: "image/svg+xml", href: `${BASE}favicon.svg` }],
+    ["link", { rel: "icon", type: "image/png", sizes: "48x48", href: `${BASE}favicon.png` }],
+    ["link", { rel: "apple-touch-icon", href: `${BASE}apple-touch-icon.png` }],
+  ],
   cleanUrls: true,
   ignoreDeadLinks: [/^\/play/],
   vite: {
