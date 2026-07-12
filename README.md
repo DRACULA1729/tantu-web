@@ -83,7 +83,7 @@ The wheel, `tantu-wheel.json`, and the examples are *committed*, not just genera
 repo builds standalone when the language repo isn't checked out next to it (CI, Netlify, a bare
 clone): the build script falls back to the vendored copies, and `build-docs-assets.py` imports the
 language modules straight from the vendored wheel, which is zip-importable because it's pure
-Python. A workflow in tantu-lang pushes fresh assets here on every merge to its `main`.
+Python. A workflow in tantu-lang pushes fresh assets here on every merge to its `master`.
 
 Generated things stay generated. The Shiki `tantu` grammar comes from `tantu/tokens.py`, the
 builtins table from the language's builtin signatures, and the error-code table from every
