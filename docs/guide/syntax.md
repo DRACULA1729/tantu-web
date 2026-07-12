@@ -5,7 +5,7 @@ Tantu's surface is small and regular. This page is the reference for the shape o
 ## Layout: indentation, not braces
 
 Blocks are introduced by a `:` and an increase in indentation, exactly like Python. Indentation is
-**spaces only** — a tab in indentation is a lexer error (`L001`). A block's body must be more
+**spaces only**; a tab in indentation is a lexer error (`L001`). A block's body must be more
 indented than its header and consistently so.
 
 ```tantu
@@ -66,7 +66,7 @@ fn main() -> Unit:
 | Other | `?` (error propagation), `.` (field/module access), `->`/`=>` (types/match arms) |
 
 `==`/`!=` work on every type except functions and channels. Ordering (`<` `<=` `>` `>=`) is defined
-for `Int`, `Float`, and `Str`. Both operands of a binary operator must have the **same** type —
+for `Int`, `Float`, and `Str`. Both operands of a binary operator must have the **same** type;
 there is no implicit `Int`→`Float` widening (use `float(n)`).
 
 ```tantu
@@ -80,6 +80,6 @@ fn main() -> Unit:
 ## The grammar
 
 The parser follows a fixed EBNF grammar (DESIGN §2.11 in the language repo). The pages that follow
-cover each construct — [functions](/guide/functions), [pattern matching](/guide/pattern-matching),
+cover each construct ([functions](/guide/functions), [pattern matching](/guide/pattern-matching),
 [types](/guide/types), [concurrency](/guide/concurrency), [modules](/guide/modules), and
-[generics](/guide/generics) — with runnable examples.
+[generics](/guide/generics)) with runnable examples.

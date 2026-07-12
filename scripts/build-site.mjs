@@ -10,7 +10,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const web = resolve(here, "..");
 const docs = join(web, "docs");
 // The docs generator is stdlib-only, so any python3 works when the local build venv is absent
-// (CI/Netlify — there it imports the language modules from the vendored wheel).
+// (CI/Netlify, where it imports the language modules from the vendored wheel).
 const venvPython = join(web, ".build-venv", "bin", "python");
 const buildPython = existsSync(venvPython) ? venvPython : "python3";
 

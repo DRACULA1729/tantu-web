@@ -4,7 +4,7 @@ A Tantu program is a set of sibling `*.tn` files in one directory. `import name`
 of `name.tn` available under a `name.` prefix.
 
 ::: tip Playground note
-The playground has a single editor, so the multi-file examples on this page are marked so — run
+The playground has a single editor, so the multi-file examples on this page are marked so; run
 them locally with `python -m tantu run main.tn`. Everything else in these docs runs in the browser.
 :::
 
@@ -39,7 +39,7 @@ Running `tantu run main.tn`:
 
 In v1, imports are **value-only**: you can use another module's functions and its top-level `let`
 bindings (and the nominal types in their signatures). Sharing enums, structs, and their
-constructors across modules is deferred past v1 — define those in the module that uses them.
+constructors across modules is deferred past v1; define those in the module that uses them.
 
 ## Errors
 

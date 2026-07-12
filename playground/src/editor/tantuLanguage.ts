@@ -9,7 +9,7 @@ const KEYWORDS = new Set([
   "import", "and", "or", "not", "true", "false",
 ]);
 
-// Built-in type names (DESIGN.md) — highlighted distinctly from keywords.
+// Built-in type names (DESIGN.md), highlighted distinctly from keywords.
 const TYPES = new Set([
   "Int", "Float", "Bool", "Str", "Unit", "List", "Tuple", "Chan", "Option", "Result",
 ]);

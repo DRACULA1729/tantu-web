@@ -1,11 +1,11 @@
 # Concurrency
 
-Tantu's concurrency is **CSP** — the model behind Go. You start lightweight **fibers** with `spawn`,
+Tantu's concurrency is **CSP**, the model behind Go. You start lightweight **fibers** with `spawn`,
 and they communicate by passing messages over typed **channels** rather than sharing memory. There
 is no shared mutable state to race on (closures capture by value, and you can't capture a `var`).
 
 All fibers run cooperatively on one thread with a deterministic scheduler, so concurrent programs
-produce the same output every time — which is why the examples below are runnable and testable.
+produce the same output every time, which is why the examples below are runnable and testable.
 
 ## Channels
 
@@ -24,7 +24,7 @@ fn main() -> Unit:
         None    => print("closed")
 ```
 
-`send(ch, v)` puts a value on the channel; `recv(ch)` takes one and returns `Option[T]` — `Some(v)`
+`send(ch, v)` puts a value on the channel; `recv(ch)` takes one and returns `Option[T]`: `Some(v)`
 for a value, or `None` when the channel is closed and drained. That is why you always `match` a
 `recv`.
 
