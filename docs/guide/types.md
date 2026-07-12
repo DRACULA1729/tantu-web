@@ -17,7 +17,7 @@ fn main() -> Unit:
     print(twice(21))
 ```
 
-Add an annotation to a local when the type can't be inferred — most commonly an empty list:
+Add an annotation to a local when the type can't be inferred, most commonly an empty list:
 
 ```tantu
 fn main() -> Unit:
@@ -41,7 +41,7 @@ new one and leave the original alone.
 
 ## No null: `Option[T]`
 
-Absence is a value of type `Option[T]` — either `Some(value)` or `None`. There is no way to get a
+Absence is a value of type `Option[T]`: either `Some(value)` or `None`. There is no way to get a
 "null pointer": the type system forces you to handle the `None` case.
 
 ```tantu
@@ -100,12 +100,12 @@ fn main() -> Unit:
 ```
 
 The rule: `?` on a `Result` requires the enclosing function to return a `Result` with the same error
-type; `?` on an `Option` requires it to return an `Option`. Mixing the two is a type error (`E0106`)
-— convert explicitly with `match`.
+type; `?` on an `Option` requires it to return an `Option`. Mixing the two is a type error (`E0106`);
+convert explicitly with `match`.
 
 ## Panics
 
 The failure mode that *isn't* a value is a **panic**: division by zero, an out-of-range list index,
 a `send` on a closed channel, or deadlock. A panic prints a stack trace and terminates the whole
-program with exit code 1 — there is no `catch` in v1. Prefer `get` (which returns `Option`) over
+program with exit code 1; there is no `catch` in v1. Prefer `get` (which returns `Option`) over
 indexing when an index might be out of range.

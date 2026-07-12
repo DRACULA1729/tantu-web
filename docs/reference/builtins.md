@@ -1,9 +1,9 @@
 # Builtins reference
 
-Tantu's builtins are callable names available in every program — no import needed. A few (`chan`,
+Tantu's builtins are callable names available in every program, with no import needed. A few (`chan`,
 `send`, `recv`, `close`, `sleep`, `print`) are compiler intrinsics backed by dedicated bytecode;
 the rest are ordinary library functions. Referencing a builtin outside call position is a compile
-error — they aren't first-class values.
+error; they aren't first-class values.
 
 In the signatures below, `T` and `U` stand for any type.
 

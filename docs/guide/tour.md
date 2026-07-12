@@ -1,6 +1,6 @@
 # Language tour
 
-A guided walk through Tantu. Every block runs — hit **Try it ** and change things.
+A guided walk through Tantu. Every block runs: hit **Try it ** and change things.
 
 ## Values and bindings
 
@@ -28,7 +28,7 @@ fn main() -> Unit:
     print(double(21))
 ```
 
-The last expression in a body is its result — no `return` needed (though `return` works for early
+The last expression in a body is its result, with no `return` needed (though `return` works for early
 exits). Functions are ordinary values with a type like `(Int) -> Int`.
 
 ## Control flow is expression-oriented
@@ -67,7 +67,7 @@ fn main() -> Unit:
     print(describe(Custom(200, 30, 40)))
 ```
 
-`match` is exhaustive — the checker rejects a match that forgets a variant. It is also an
+`match` is exhaustive: the checker rejects a match that forgets a variant. It is also an
 expression, so it produces a value.
 
 ## No null: Option and Result
@@ -85,7 +85,7 @@ fn main() -> Unit:
 ```
 
 There is no `null` in Tantu. Absence is `Option[T]`; recoverable failure is `Result[T, E]`. You get
-the value out by matching, or with the `?` operator — see [Types & no-null](/guide/types).
+the value out by matching, or with the `?` operator; see [Types & no-null](/guide/types).
 
 ## Collections
 
@@ -100,7 +100,7 @@ fn main() -> Unit:
     print(word)
 ```
 
-Lists are immutable by convention — `push` and `concat` return new lists. Tuples always have at
+Lists are immutable by convention: `push` and `concat` return new lists. Tuples always have at
 least two elements.
 
 ## Concurrency
@@ -149,7 +149,7 @@ fn main() -> Unit:
     print(map([1, 2, 3], dbl))
 ```
 
-Type parameters go in `[ ]`. Generics are fully parametric and inferred — you never write the type
+Type parameters go in `[ ]`. Generics are fully parametric and inferred; you never write the type
 arguments. See [Generics](/guide/generics).
 
 That is the whole language in one page. The rest of the guide goes deeper on each topic.

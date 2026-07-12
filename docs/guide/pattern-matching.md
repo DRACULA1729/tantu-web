@@ -24,11 +24,11 @@ fn main() -> Unit:
 
 ## Kinds of pattern
 
-- **Literal** — `0`, `-1`, `"hi"`, `true`
-- **Binding** — `name` (captures the value)
-- **Wildcard** — `_` (matches anything, binds nothing)
-- **Variant** — `Some(x)`, `Caution(n)`, `Custom(r, g, b)`
-- **Tuple** — `(a, b)`
+- **Literal**: `0`, `-1`, `"hi"`, `true`
+- **Binding**: `name` (captures the value)
+- **Wildcard**: `_` (matches anything, binds nothing)
+- **Variant**: `Some(x)`, `Caution(n)`, `Custom(r, g, b)`
+- **Tuple**: `(a, b)`
 
 Patterns nest, so you can destructure deeply in one arm:
 
@@ -51,7 +51,7 @@ fn main() -> Unit:
 
 ## Exhaustiveness
 
-The checker rejects a `match` that misses a case. This won't compile — it forgets `Blue`:
+The checker rejects a `match` that misses a case. This won't compile, since it forgets `Blue`:
 
 ```tantu noplay
 enum Hue:
@@ -64,7 +64,7 @@ fn name(h: Hue) -> Str:
 ```
 
 A binding or wildcard arm covers "everything else", but once you write one, any arm after it is
-**unreachable** (`E0120`). For `Int` and `Str` matches — which have unbounded value sets — a
+**unreachable** (`E0120`). For `Int` and `Str` matches, which have unbounded value sets, a
 trailing wildcard or binding arm is required.
 
 ```tantu
@@ -94,5 +94,5 @@ fn main() -> Unit:
     print(label)
 ```
 
-There are no guards, or-patterns, or struct patterns in v1 — match a struct by binding it and
+There are no guards, or-patterns, or struct patterns in v1; match a struct by binding it and
 reading fields, and match a `Float` with a binding plus comparisons.

@@ -38,7 +38,7 @@ if (!existsSync(langRepo)) {
   const { wheel } = JSON.parse(readFileSync(manifest, "utf8"));
   if (!existsSync(join(publicDir, wheel))) fail(`vendored wheel ${wheel} missing from ${publicDir}`);
   if (!existsSync(join(examplesOut, "index.json"))) fail(`vendored examples/index.json missing from ${examplesOut}`);
-  console.log(`[build-tantu-assets] language repo not found — using vendored ${wheel} + examples/`);
+  console.log(`[build-tantu-assets] language repo not found; using vendored ${wheel} + examples/`);
   process.exit(0);
 }
 if (!existsSync(join(langRepo, "pyproject.toml"))) fail(`pyproject.toml not found in ${langRepo}`);

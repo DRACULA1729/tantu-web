@@ -114,6 +114,9 @@ export default function App() {
     <div className="app">
       <header className="topbar">
         <div className="brand">
+          <a className="docs-link" href="../" title="Back to the Tantu docs">
+            ← Docs
+          </a>
           <span className="logo">⋈</span> Tantu <span className="sub">Playground</span>
         </div>
         <div className="actions">

@@ -1,5 +1,9 @@
 # Functions & closures
 
+Functions are **first-class values** in Tantu, you can pass them around, return them, and build
+them on the fly with lambdas. This page covers declaring functions, using them as values, and how
+closures capture their environment (by value, and why).
+
 ## Declaring functions
 
 ```tantu
@@ -19,8 +23,8 @@ the return value; `return expr` is available for early exits, and a bare `return
 
 ## Order doesn't matter
 
-Module-level functions may call each other regardless of the order they're written — Tantu checks
-all signatures first, then the bodies. Recursion and mutual recursion just work.
+Module-level functions may call each other regardless of the order they're written, because Tantu
+checks all signatures first, then the bodies. Recursion and mutual recursion just work.
 
 ```tantu
 fn is_even(n: Int) -> Bool:
@@ -57,7 +61,7 @@ fn main() -> Unit:
 
 ## Lambdas and closures
 
-Anonymous functions use `fn` with no name — an inline expression body, or an indented block:
+Anonymous functions use `fn` with no name, written as an inline expression body or an indented block:
 
 ```tantu
 fn main() -> Unit:
@@ -85,7 +89,7 @@ fn main() -> Unit:
 ## Why capture is by value
 
 You can only capture immutable (`let`) bindings. Capturing a `var` is a compile error (`E0103`):
-this is deliberate — it removes a whole class of data races between fibers and makes closures easy
+this is deliberate, since it removes a whole class of data races between fibers and makes closures easy
 to reason about. If you need a mutable value's current contents in a closure, copy it into a `let`
 first.
 

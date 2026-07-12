@@ -15,7 +15,7 @@ scripts, never modified in place.
 ```
 tantu-web/
   playground/        React + Vite + TypeScript playground
-    public/          built wheel + examples (generated — see below)
+    public/          built wheel + examples (generated; see below)
     src/worker/      Pyodide worker + facade.py + main-thread client (watchdog, respawn)
     src/editor/      CodeMirror 6 Tantu StreamLanguage
     src/playground/  App, tabs, examples gallery, share-by-URL
@@ -78,12 +78,12 @@ npm run dev        # runs the asset build, then starts Vite on :5173
 `npm run dev` / `npm run build` both run `scripts/build-tantu-assets.mjs` first, which:
 
 1. copies `../Tantu/{pyproject.toml,tantu/}` into a temp dir and builds the wheel
-   **there** (so the language repo is never written to — no `build/` or `*.egg-info`),
+   **there** (so the language repo is never written to; no `build/` or `*.egg-info`),
 2. copies the wheel + a `tantu-wheel.json` manifest into `playground/public/`,
 3. copies `../Tantu/examples/*.tn` into `playground/public/examples/` and writes
    an `index.json` the examples gallery fetches.
 
-Re-run it (`npm run assets`) whenever the language changes to resync the wheel + examples — it is
+Re-run it (`npm run assets`) whenever the language changes to resync the wheel + examples; it is
 the single seam between the two repos.
 
 **Vendored assets:** the wheel, `tantu-wheel.json`, and `playground/public/examples/` are
@@ -97,7 +97,7 @@ resyncing with `npm run assets`, commit the changed assets.
 
 `netlify.toml` builds the combined site with `node scripts/build-site.mjs` (installing
 playground/ and docs/ deps first) and publishes `docs/.vitepress/dist/`. Thanks to the vendored
-assets this needs only Node + a stock `python3` — no language repo, no `.build-venv`. Pushing a
+assets this needs only Node + a stock `python3`: no language repo, no `.build-venv`. Pushing a
 new wheel to production = `npm run assets` in `playground/`, commit, push.
 
 ## How it runs Tantu
@@ -111,7 +111,7 @@ makes `sleep`/channel programs finish instantly and deterministically.
 ### Infinite-loop safety (two layers)
 
 1. **In-band:** the facade passes `step_limit` to `VM.run`; a runaway `loop:` trips a graceful
-   `R008` panic (this is the one small, backward-compatible enhancement made to the language repo —
+   `R008` panic (this is the one small, backward-compatible enhancement made to the language repo;
    see its `DECISIONS.md` and `tests/test_step_limit.py`).
 2. **Watchdog:** the main thread also enforces a ~5s wall-clock limit; on expiry it terminates the
    Pyodide worker and respawns a warm one, reporting "execution timed out".
@@ -119,4 +119,4 @@ makes `sleep`/channel programs finish instantly and deterministically.
 ## Share links
 
 Source is encoded in the URL hash as `#code=<base64url(source)>`. This format is the contract the
-Phase-2 docs site's "Try it " links build against — keep it stable.
+Phase-2 docs site's "Try it " links build against, so keep it stable.

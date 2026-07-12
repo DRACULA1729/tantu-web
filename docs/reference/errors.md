@@ -9,7 +9,7 @@ Every diagnostic Tantu reports carries a stable code. The prefix tells you which
 | `E####` | check | type checking (types, scopes, exhaustiveness, no-null, immutability) |
 | `R###` | runtime | a panic while the program runs |
 
-Lex, parse, and check errors are **compile-time** (exit code 2) — the program never runs. Runtime
+Lex, parse, and check errors are **compile-time** (exit code 2), so the program never runs. Runtime
 panics (exit code 1) happen during execution and terminate the whole program with a stack trace.
 
 <!--@include: ./_errors.generated.md-->

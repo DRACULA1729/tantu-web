@@ -30,7 +30,7 @@ fn main() -> Unit:
     print(fold(nums, 0, add))   # 10
 ```
 
-Type arguments are **always inferred** from the call — you never write `map[Int, Int](...)`. If
+Type arguments are **always inferred** from the call; you never write `map[Int, Int](...)`. If
 the checker can't pin down a type parameter it reports `E0119`.
 
 ## Generic data types
@@ -69,19 +69,19 @@ fn main() -> Unit:
 
 ## What "parametric" means
 
-Tantu's generics are **fully parametric** — there are no bounds or trait constraints. Inside a
+Tantu's generics are **fully parametric**: there are no bounds or trait constraints. Inside a
 generic body a type parameter `T` is **opaque**: you can pass it around, store it, put it in a
 list, match on it, and send it over a channel, but you cannot add, compare, or call it, because the
 checker knows nothing about what `T` supports.
 
 ```tantu noplay
 fn bad[T](a: T, b: T) -> Bool:
-    a == b        # error: T is opaque — nothing says it's comparable
+    a == b        # error: T is opaque; nothing says it's comparable
 ```
 
 Generics are **erased**: a generic definition compiles to a *single* function or descriptor, not
 one copy per type. This keeps the compiled program small and is why type arguments never need to be
 written down.
 
-A generic function is **call-only** — it isn't a first-class value (`E0136`). If you need one as a
+A generic function is **call-only**; it isn't a first-class value (`E0136`). If you need one as a
 value, wrap it in a lambda with concrete types.

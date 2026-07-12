@@ -1,6 +1,6 @@
 # Quick start
 
-The fastest way to try Tantu is the **[playground](/play/){target="_blank" rel="noopener"}** — it runs the real
+The fastest way to try Tantu is the **[playground](/play/){target="_blank" rel="noopener"}**, which runs the real
 interpreter in your browser, with no install. Every code block in these docs has a **Try it **
 button (hover to reveal it) that opens the snippet there.
 
@@ -12,7 +12,7 @@ fn main() -> Unit:
 ```
 
 Every program starts at `fn main()`. The `-> Unit` return type means "returns nothing"; you can
-omit it and Tantu infers `Unit`. Blocks are defined by **indentation** (spaces only — tabs are an
+omit it and Tantu infers `Unit`. Blocks are defined by **indentation** (spaces only; tabs are an
 error), just like Python.
 
 ## A first real program
@@ -33,7 +33,7 @@ fn main() -> Unit:
 A few things to notice:
 
 - `let` binds an **immutable** value; `var` binds a mutable one. Reach for `let` by default.
-- Function parameter and return types are **required** — that is the boundary where you tell the
+- Function parameter and return types are **required**; that is the boundary where you tell the
   checker what you mean; the bodies are inferred from there.
 - `+` concatenates strings and adds numbers; lists are joined with `concat` (see
   [Builtins](/reference/builtins)).

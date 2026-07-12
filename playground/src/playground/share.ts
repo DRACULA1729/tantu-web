@@ -1,5 +1,5 @@
 // Share-by-URL: the source is encoded in the location hash as #code=<base64url(utf8(source))>.
-// THIS FORMAT IS THE CONTRACT the docs site's "Try it " links build against — keep it stable.
+// THIS FORMAT IS THE CONTRACT the docs site's "Try it " links build against; keep it stable.
 
 function toBase64Url(bytes: Uint8Array): string {
   let bin = "";

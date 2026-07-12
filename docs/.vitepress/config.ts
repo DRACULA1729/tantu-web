@@ -57,7 +57,7 @@ const servePlayIndex = {
 export default defineConfig({
   title: "Tantu",
   description:
-    "A statically-typed, Python-readable language with fibers and channels — compiled to bytecode and run on a hand-built stack VM.",
+    "A statically-typed, Python-readable language with fibers and channels, compiled to bytecode and run on a hand-built stack VM.",
   base: BASE,
   cleanUrls: true,
   ignoreDeadLinks: [/^\/play/],

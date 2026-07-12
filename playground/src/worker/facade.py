@@ -1,4 +1,4 @@
-# Tantu playground facade — lives in the PLAYGROUND repo, not the language repo.
+# Tantu playground facade; lives in the PLAYGROUND repo, not the language repo.
 #
 # Executed once in the Pyodide worker via runPython, then JS calls evaluate(source) per Run.
 # It reuses tantu's own public APIs and returns ONE JSON-able dict so the JS<->Python boundary is a
