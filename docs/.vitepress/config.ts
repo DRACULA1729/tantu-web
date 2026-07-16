@@ -65,6 +65,15 @@ export default defineConfig({
     ["link", { rel: "apple-touch-icon", href: `${BASE}apple-touch-icon.png` }],
   ],
   cleanUrls: true,
+  // sitemap.xml for search engines; /play/ is outside VitePress's page graph, so append it.
+  sitemap: {
+    hostname: "https://tantu-play.netlify.app",
+    // Drop the _*.generated include-partials (not standalone pages) and add /play/.
+    transformItems: (items) => [
+      ...items.filter((i) => !i.url.includes("/_")),
+      { url: "play/" },
+    ],
+  },
   ignoreDeadLinks: [/^\/play/],
   vite: {
     plugins: [servePlayIndex],
