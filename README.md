@@ -8,7 +8,8 @@
 # Tantu Web
 
 The documentation site and in-browser playground for [Tantu](https://github.com/DRACULA1729/tantu-lang),
-a statically-typed, Python-readable language with fibers and channels.
+a typed language with fibers and channels, built in about 6,000 lines of plain Python that you
+can read in a weekend.
 
 **Live site: <https://tantu-play.netlify.app>**
 
@@ -21,6 +22,8 @@ a statically-typed, Python-readable language with fibers and channels.
   code with a link — the source travels in the URL hash.
 
 Runnable code blocks in the docs carry a "Try it" button that opens them in the playground.
+For LLMs and coding agents, the site also serves [`llms.txt`](https://tantu-play.netlify.app/llms.txt)
+and the whole guide in one file at [`llms-full.txt`](https://tantu-play.netlify.app/llms-full.txt).
 
 Everything below is for people working on this repo.
 
