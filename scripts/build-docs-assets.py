@@ -4,6 +4,7 @@
   1. docs/.vitepress/tantu.tmLanguage.json  = Shiki grammar, from tantu/tokens.py's keyword set
   2. docs/reference/_errors.generated.md   = every code in tantu/errors.py + curated descriptions
   3. docs/reference/_builtins.generated.md = Appendix A builtins, validated against BUILTIN_SIGS
+  4. docs/public/llms.txt + llms-full.txt   = the guide for LLMs (llmstxt.org): an index + every page in one file
 
 The error table's CODE LIST is authoritative (pulled live from errors.py); a code missing a
 curated description in reference/error-descriptions.json is a hard error, so a newly added
@@ -141,6 +142,38 @@ def gen_builtins() -> str:
             + "\n".join(rows) + "\n")
 
 
+# --------------------------------------------------------------------- 4. llms.txt
+SITE = "https://tantu-play.netlify.app"
+# Sidebar order from docs/.vitepress/config.ts; keep the two lists in step.
+LLM_PAGES = [
+    ("Introduction", "index"), ("Quick start", "guide/quick-start"), ("Language tour", "guide/tour"),
+    ("Syntax", "guide/syntax"), ("Types & no-null", "guide/types"),
+    ("Pattern matching", "guide/pattern-matching"), ("Functions & closures", "guide/functions"),
+    ("Concurrency", "guide/concurrency"), ("Modules", "guide/modules"), ("Generics", "guide/generics"),
+    ("Under the hood", "guide/under-the-hood"), ("Builtins", "reference/builtins"),
+    ("Error codes", "reference/errors"),
+]
+LLM_SUMMARY = ("> Tantu is a statically-typed, Python-readable language with no null, pattern matching, "
+               "generics, and fibers that talk over typed channels. It runs on a bytecode VM written in Python "
+               "(`pip install tantu`, then `tantu run file.tn`).")
+
+
+def gen_llms() -> tuple[str, str]:
+    index = ["# Tantu", "", LLM_SUMMARY, "", "## Docs", ""]
+    index += [f"- [{title}]({SITE}/{path.removesuffix('index')})" for title, path in LLM_PAGES]
+    index += ["", "## Optional", "", f"- [Every page above in one file]({SITE}/llms-full.txt)",
+              "- [Source code](https://github.com/DRACULA1729/tantu-lang)", ""]
+
+    full = ["# Tantu", "", LLM_SUMMARY]
+    for title, path in LLM_PAGES:
+        md = (DOCS / f"{path}.md").read_text()
+        md = re.sub(r"\A---\n.*?\n---\n", "", md, flags=re.S)  # drop the home page's hero frontmatter
+        md = re.sub(r"<!--@include: \./(\S+?)-->",
+                    lambda m: (DOCS / path).parent.joinpath(m[1]).read_text(), md)
+        full += ["", "---", f"<!-- {SITE}/{path.removesuffix('index')} -->", "", md.strip()]
+    return "\n".join(index), "\n".join(full) + "\n"
+
+
 def main() -> None:
     (DOCS / ".vitepress").mkdir(parents=True, exist_ok=True)
     (DOCS / "reference").mkdir(parents=True, exist_ok=True)
@@ -149,7 +182,10 @@ def main() -> None:
         json.dumps(gen_grammar(), indent=2) + "\n")
     (DOCS / "reference" / "_errors.generated.md").write_text(gen_errors())
     (DOCS / "reference" / "_builtins.generated.md").write_text(gen_builtins())
-    print("[build-docs-assets] wrote grammar + error/builtin reference partials")
+    llms, llms_full = gen_llms()  # after the partials: the reference pages include them
+    (DOCS / "public" / "llms.txt").write_text(llms)
+    (DOCS / "public" / "llms-full.txt").write_text(llms_full)
+    print("[build-docs-assets] wrote grammar + error/builtin reference partials + llms.txt")
 
 
 if __name__ == "__main__":

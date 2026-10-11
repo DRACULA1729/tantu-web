@@ -20,3 +20,5 @@ docs/.vitepress/tantu.tmLanguage.json
 docs/reference/_errors.generated.md
 docs/reference/_builtins.generated.md
 docs/public/play/
+docs/public/llms.txt
+docs/public/llms-full.txt

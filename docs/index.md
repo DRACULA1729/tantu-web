@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: Tantu
-  text: A small language with big ideas
-  tagline: Python-readable syntax, static types with no null, and Go-style concurrency, compiled to bytecode and run on a hand-built stack VM.
+  text: A typed language you can read in a weekend
+  tagline: Python-readable syntax, static types with no null, and Go-style concurrency, in about 6,000 lines of plain Python, from the lexer to the bytecode VM.
   actions:
     - theme: brand
       text: Get started
@@ -17,6 +17,9 @@ hero:
     - theme: alt
       text: Language tour
       link: /guide/tour
+    - theme: alt
+      text: Read the source
+      link: https://github.com/DRACULA1729/tantu-lang#read-the-implementation
 
 features:
   - title: Readable by design
